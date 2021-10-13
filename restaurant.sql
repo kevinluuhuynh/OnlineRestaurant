@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2021 at 04:07 AM
+-- Generation Time: Oct 13, 2021 at 05:09 AM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -32,15 +32,16 @@ CREATE TABLE IF NOT EXISTS `account` (
   `last_name` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
   `address` varchar(250) NOT NULL,
-  `email` varchar(50) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `password` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`) VALUES
-(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com');
+INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`, `password`) VALUES
+(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com', 'testpass1234');
 
 -- --------------------------------------------------------
 
@@ -49,7 +50,7 @@ INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `addres
 --
 
 CREATE TABLE IF NOT EXISTS `categories` (
-  `category` varchar(100) DEFAULT NULL
+  `category` varchar(100) NOT NULL DEFAULT ''
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -58,24 +59,24 @@ CREATE TABLE IF NOT EXISTS `categories` (
 
 INSERT INTO `categories` (`category`) VALUES
 ('APPETIZERS'),
-('SOUPS'),
-('NOODLE SOUPS'),
-('FRIED RICE'),
-('CHOW MEIN'),
-('LO MEIN'),
-('PAN FRIED EGG NOODLE'),
-('CHICKEN'),
 ('BEEF'),
+('CHICKEN'),
+('CHOW MEIN'),
+('DIET MENU SPECIAL'),
+('EGG FOO YOUNG'),
+('FRIED RICE'),
+('HO FUN OR MEI FUN'),
+('KY LIN CHEF SUGGESTIONS'),
+('LO MEIN'),
+('NOODLE SOUPS'),
+('PAN FRIED EGG NOODLE'),
 ('PORK'),
 ('SEAFOOD'),
-('VEGETABLES & BEAN CURD'),
-('HO FUN OR MEI FUN'),
-('EGG FOO YOUNG'),
-('SWEET & SOUR'),
-('DIET MENU SPECIAL'),
-('SPECIAL PLATTER'),
 ('SIDE ORDERS & DRINKS'),
-('KY LIN CHEF SUGGESTIONS');
+('SOUPS'),
+('SPECIAL PLATTER'),
+('SWEET & SOUR'),
+('VEGETABLES & BEAN CURD');
 
 -- --------------------------------------------------------
 
@@ -85,13 +86,27 @@ INSERT INTO `categories` (`category`) VALUES
 
 CREATE TABLE IF NOT EXISTS `menu` (
   `menu_id` int(12) NOT NULL,
-  `dish_name` varchar(36) NOT NULL,
+  `dish_name` varchar(100) DEFAULT NULL,
   `price` float NOT NULL,
   `size` varchar(10) DEFAULT NULL,
   `options` int(11) DEFAULT NULL,
   `description` varchar(250) DEFAULT NULL,
-  `category` varchar(50) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `category` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`menu_id`, `dish_name`, `price`, `size`, `options`, `description`, `category`) VALUES
+(2, 'Vegetable Springs Rolls (2pcs)', 2.95, NULL, NULL, NULL, 'APPETIZERS'),
+(3, 'Wonton Soup', 2.75, 'Small', NULL, NULL, 'SOUPS'),
+(4, 'Wonton Soup', 4.95, 'Large', NULL, NULL, 'SOUPS'),
+(5, 'Fish Ball Noodle Soup', 9.95, NULL, NULL, NULL, 'NOODLE SOUPS'),
+(6, 'Vegetable Fried Rice', 5.95, 'Pt.', NULL, NULL, 'FRIED RICE'),
+(7, 'Vegetable Fried Rice', 8.95, 'Qt.', NULL, NULL, 'FRIED RICE'),
+(8, 'Vegetable Chow Mein', 5.95, 'Pt.', NULL, 'Served w/ white rice & fried noodle', 'CHOW MEIN'),
+(9, 'Vegetable Chow Mein', 8.95, 'Qt.', NULL, 'Served w/ white rice & fried noodle', 'CHOW MEIN');
 
 -- --------------------------------------------------------
 
@@ -124,11 +139,18 @@ ALTER TABLE `account`
   ADD PRIMARY KEY (`account_id`);
 
 --
+-- Indexes for table `categories`
+--
+ALTER TABLE `categories`
+  ADD PRIMARY KEY (`category`);
+
+--
 -- Indexes for table `menu`
 --
 ALTER TABLE `menu`
   ADD PRIMARY KEY (`menu_id`),
-  ADD KEY `size` (`size`);
+  ADD KEY `size` (`size`),
+  ADD KEY `category` (`category`);
 
 --
 -- Indexes for table `sizes`
@@ -149,7 +171,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_id` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `menu_id` int(12) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
 --
 -- Constraints for dumped tables
 --
@@ -158,7 +180,8 @@ ALTER TABLE `menu`
 -- Constraints for table `menu`
 --
 ALTER TABLE `menu`
-  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`size`) REFERENCES `sizes` (`size`);
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`size`) REFERENCES `sizes` (`size`),
+  ADD CONSTRAINT `menu_ibfk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`category`);
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;

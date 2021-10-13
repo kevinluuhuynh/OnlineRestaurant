@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 13, 2021 at 04:07 AM
+-- Generation Time: Oct 13, 2021 at 05:08 AM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -32,15 +32,16 @@ CREATE TABLE IF NOT EXISTS `account` (
   `last_name` varchar(50) NOT NULL,
   `phone` varchar(14) NOT NULL,
   `address` varchar(250) NOT NULL,
-  `email` varchar(50) NOT NULL
+  `email` varchar(50) NOT NULL,
+  `password` varchar(250) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`) VALUES
-(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com');
+INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`, `password`) VALUES
+(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com', 'testpass1234');
 
 --
 -- Indexes for dumped tables

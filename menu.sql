@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 09, 2021 at 02:59 AM
+-- Generation Time: Oct 13, 2021 at 05:02 AM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -28,12 +28,27 @@ SET time_zone = "+00:00";
 
 CREATE TABLE IF NOT EXISTS `menu` (
   `menu_id` int(12) NOT NULL,
-  `dish_name` varchar(36) NOT NULL,
+  `dish_name` varchar(100) DEFAULT NULL,
   `price` float NOT NULL,
-  `size` int(11) DEFAULT NULL,
+  `size` varchar(10) DEFAULT NULL,
   `options` int(11) DEFAULT NULL,
-  `description` varchar(250) DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `description` varchar(250) DEFAULT NULL,
+  `category` varchar(100) DEFAULT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `menu`
+--
+
+INSERT INTO `menu` (`menu_id`, `dish_name`, `price`, `size`, `options`, `description`, `category`) VALUES
+(2, 'Vegetable Springs Rolls (2pcs)', 2.95, NULL, NULL, NULL, 'APPETIZERS'),
+(3, 'Wonton Soup', 2.75, 'Small', NULL, NULL, 'SOUPS'),
+(4, 'Wonton Soup', 4.95, 'Large', NULL, NULL, 'SOUPS'),
+(5, 'Fish Ball Noodle Soup', 9.95, NULL, NULL, NULL, 'NOODLE SOUPS'),
+(6, 'Vegetable Fried Rice', 5.95, 'Pt.', NULL, NULL, 'FRIED RICE'),
+(7, 'Vegetable Fried Rice', 8.95, 'Qt.', NULL, NULL, 'FRIED RICE'),
+(8, 'Vegetable Chow Mein', 5.95, 'Pt.', NULL, 'Served w/ white rice & fried noodle', 'CHOW MEIN'),
+(9, 'Vegetable Chow Mein', 8.95, 'Qt.', NULL, 'Served w/ white rice & fried noodle', 'CHOW MEIN');
 
 --
 -- Indexes for dumped tables
@@ -43,7 +58,9 @@ CREATE TABLE IF NOT EXISTS `menu` (
 -- Indexes for table `menu`
 --
 ALTER TABLE `menu`
-  ADD PRIMARY KEY (`menu_id`);
+  ADD PRIMARY KEY (`menu_id`),
+  ADD KEY `size` (`size`),
+  ADD KEY `category` (`category`);
 
 --
 -- AUTO_INCREMENT for dumped tables
@@ -53,7 +70,18 @@ ALTER TABLE `menu`
 -- AUTO_INCREMENT for table `menu`
 --
 ALTER TABLE `menu`
-  MODIFY `menu_id` int(12) NOT NULL AUTO_INCREMENT;
+  MODIFY `menu_id` int(12) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `menu`
+--
+ALTER TABLE `menu`
+  ADD CONSTRAINT `menu_ibfk_1` FOREIGN KEY (`size`) REFERENCES `sizes` (`size`),
+  ADD CONSTRAINT `menu_ibfk_2` FOREIGN KEY (`category`) REFERENCES `categories` (`category`);
+
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
