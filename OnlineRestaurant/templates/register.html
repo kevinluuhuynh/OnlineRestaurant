@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Register Page
+{% endblock%}
+
+{% block content %}
+
+<body class="text-center">
+
+    <div class="container">
+            <h1 class="h3 mb-3 font-weight-normal">
+                Please Create your Account
+            </h1>
+            <br>
+            <form method="POST" class="form-register" style="color:white">
+
+				<input type="text" name="first_name" placeholder="First Name" id="first_name" required>
+
+				<input type="text" name="last_name" placeholder="Last Name" id="last_name" required>
+
+				<input type="text" name="phone" placeholder="Phone Number" id="phone" required>
+
+				<input type="text" name="address" placeholder="Street Address" id="address" required>
+
+				<input type="password" name="password" placeholder="Password" id="password" required>
+
+				<input type="email" name="email" placeholder="Email" id="email" required>
+
+				<div class="msg">{{ msg }}</div>
+				<input type="submit" value="Register">
+			</form>
+    </div>
+</body>
+{% endblock %}
