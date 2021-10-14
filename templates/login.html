@@ -6,13 +6,10 @@
 {% block content %}
 <body class="text-center">
     <div class="container">
-			<h1 class="h3 mb-3 font-weight-normal">
-                Please Create your Account
-            </h1>
-            <br>
 			<form method="POST">
 
-				<input type="text" name="username" placeholder="Email Address" id="email" required>
+				<input type="text" name="email" placeholder="Email" id="email" required>
+
 				<input type="password" name="password" placeholder="Password" id="password" required>
 				<div class="msg">{{ msg }}</div>
 				<input type="submit" value="Login">
