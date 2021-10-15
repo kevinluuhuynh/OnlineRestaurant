@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request, redirect, url_for, session
+from flask import Flask, render_template, request, redirect, url_for, session, flash
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
@@ -19,7 +19,7 @@ mysql = MySQL(app)
 def home_page():
     # Check if user is loggedin
     if 'loggedin' in session:
-        return render_template('home.html', id=session['account_id'])
+        return render_template('home.html', name=session['name'])
     return render_template('home.html')
 
 
@@ -51,6 +51,7 @@ def login_page():
             session['loggedin'] = True
             session['id'] = account['account_id']
             session['email'] = account['email']
+            session['name'] = account['first_name']
             # Redirect to home page
             return redirect(url_for('home_page'))
         else:
@@ -61,11 +62,12 @@ def login_page():
 
 
 @app.route('/logout')
-def logout():
+def logout_page():
     # Remove session data, this will log the user out
    session.pop('loggedin', None)
    session.pop('id', None)
    session.pop('email', None)
+   session.pop('name', None)
    # Redirect to login page
    return redirect(url_for('login_page'))
 
@@ -111,6 +113,7 @@ def register_page():
                            ' VALUES ( %s, %s, %s, %s, %s, %s)', (first_name, last_name, phone, address, password, email,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
+            return redirect(url_for('login_page', msg=msg))
 
     elif request.method == 'POST':
         # Form is empty... (no POST data)
