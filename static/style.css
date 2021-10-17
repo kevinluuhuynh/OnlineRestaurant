@@ -8,3 +8,36 @@
   /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
   background: linear-gradient(to right, rgba(106, 17, 203, 1), rgba(37, 117, 252, 1))
 }
+.aboutframe {
+    border-style: solid;
+    border-width: 40px;
+    padding: 0px;
+    border-image: url(../images/home-about-frame.png) 40 round;
+}
+.aboutframe-inner {
+    padding: 32px;
+    background-color: #f8f4eb;
+    color: #513a19;
+    font-size: 20px;
+    font-family: arvo, serif;
+    font-weight: 400;
+}
+p {
+    display: block;
+    margin-block-start: 1em;
+    margin-block-end: 1em;
+    margin-inline-start: 0px;
+    margin-inline-end: 0px;
+}
+.column {
+  float: left;
+  width: 33%;
+}
+
+/* Clear floats after the columns */
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
