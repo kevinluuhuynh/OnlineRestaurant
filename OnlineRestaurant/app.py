@@ -1,19 +1,27 @@
-from flask import Flask, render_template, request, redirect, url_for, session, flash
+from flask import Flask, render_template, request, redirect, url_for, session, flash, app
 from flask_mysqldb import MySQL
+from flaskext.mysql import MySQL
 import MySQLdb.cursors
 import re
+import pymysql
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField, HiddenField
+from app import app as app2
+from db_config import mysql
+from werkzeug.security import generate_password_hash, check_password_hash
 
+mysql = MySQL()
 app = Flask(__name__)
 
 app.config['MYSQL_HOST'] = 'localhost'
 app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
-app.config['MYSQL_DB'] = 'restaurant'
+app.config['MYSQL_DATABASE_DB'] = 'restaurant'
+app.config['MYSQL_DATABASE_HOST'] = 'localhost'
 app.config['SECRET_KEY'] = 'c3f3d37c905ea800401f0659'
 
-mysql = MySQL(app)
+mysql.init_app(app2)
+
 
 @app.route('/')
 @app.route('/home')
@@ -124,12 +132,107 @@ def register_page():
 
 
 @app.route('/order', methods=['GET', 'POST'])
-def order_page():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM menu")
-    data = cursor.fetchall()
-    return render_template('order.html', menu=data)
+def add_product_to_cart():
+        cursor = None
+        try:
+            _quantity = int(request.form['quantity'])
+            _id = request.form['menu_id']
+            if _quantity and _id and request.method == 'POST':
+                conn = mysql.connect()
+                cursor = conn.cursor(pymysql.cursor.DictCursor)
+                cursor.execute("SELECT * FROM menu WHERE menu_id=%s", _id)
+                row = cursor.fetchone()
 
+                itemArray = {row['menu_id'] : {'dish_name' : row['dish_name'], 'menu_id' : row['menu_id'], 'quantity' : _quantity, 'price' : row['price'], 'total_price' : _quantity * row['price']}}
+                all_total_price = 0
+                all_total_quantity = 0
+
+                session.modified = True
+                if 'cart_item' in session:
+                    if row['menu_id'] in session['cart_item']:
+                        for key, item in session['cart_item'].items():
+                            if row['menu_id'] == key:
+                                #session.modified = True
+                                #if session ['cart_item][key][quantity] is not None:
+                                    #session ['cart_item'][key][quantity] = 0
+                                old_quantity = session['cart_item'][key]['quantity']
+                                total_quantity = old_quantity + _quantity
+                                session['cart_item'][key]['quantity'] = total_quantity
+                                session['cart_item'][key]['total_price'] = total_quantity * row['price']
+                else:
+                    session['cart_item'] = array_merge(session['cart_item'], itemArray)
+
+                for key, value in session['cart_item'].items():
+                    individual_quantity = int(session['cart_item'][key]['quantity'])
+                    individual_price = float(session['cart_item'][key]['total_price'])
+                    all_total_quantity = all_total_quantity + individual_quantity
+                    all_total_price = all_total_price + individual_price
+
+                else:
+                    session['cart_item'] = itemArray
+                    all_total_quantity = all_total_quantity + _quantity
+                    all_total_price = all_total_price + _quantity * row['price']
+
+                session['all_total_quantity'] = all_total_quantity
+                session['all_total_price'] = all_total_price
+
+                return redirect(url_for('menu_page'))
+
+            else:
+                return "Sorry, there was an error"
+
+        except Exception as e:
+            print(e)
+        finally:
+            cursor.close()
+            conn.close()
+
+@app.route('/empty')
+def empty_cart():
+        try:
+            session.clear()
+            return redirect(url_for('menu_page'))
+        except Exception as e:
+            print(e)
+
+@app.route('/delete/<string:menu_id')
+def delete_item(menu_id):
+        try:
+            all_total_price = 0
+            all_total_quantity = 0
+            session.modified = True
+
+            for item in session['cart_item'].items():
+                if item[0] == menu_id:
+                    session['cart_item'].pop(item[0], None)
+                    if 'cart_item' in session:
+                        for key, value in session['cart_item'].items():
+                            individual_quantity = int(session['cart_item'][key]['quantity'])
+                            individual_price = float(session['cart_item'][key]['total_price'])
+                            all_total_quantity = all_total_quantity + individual_quantity
+                            all_total_price = all_total_price + individual_price
+                        break
+
+            if all_total_quantity == 0:
+                session.clear()
+            else:
+                session['all_total_quantity'] = all_total_quantity
+                session['all_total_price'] = all_total_price
+
+            #return redirect('/')
+            return redirect(url_for('menu_page'))
+
+        except Exception as e:
+            print(e)
+
+def array_merge(first_array, second_array):
+    if isinstance(first_array, list) and isinstance(second_array, list):
+        return first_array + second_array
+    elif isinstance(first_array, dict) and isinstance(second_array, dict):
+        return dict(list(first_array.items()) + list(second_array.items()))
+    elif isinstance(first_array, set) and isinstance(second_array, set):
+        return first_array.union(second_array)
+    return False
 
 if __name__ == '__main__':
     app.run(debug=True)
