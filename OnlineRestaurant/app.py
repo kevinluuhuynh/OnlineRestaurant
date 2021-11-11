@@ -2,6 +2,8 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+from flask_wtf import FlaskForm
+from wtforms import StringField, IntegerField, TextAreaField, HiddenField
 
 app = Flask(__name__)
 
@@ -12,7 +14,6 @@ app.config['MYSQL_DB'] = 'restaurant'
 app.config['SECRET_KEY'] = 'c3f3d37c905ea800401f0659'
 
 mysql = MySQL(app)
-
 
 @app.route('/')
 @app.route('/home')
@@ -69,7 +70,6 @@ def logout_page():
    session.pop('email', None)
    session.pop('name', None)
    # Redirect to login page
-   flash("You have been logged out!", category='info')
    return redirect(url_for('login_page'))
 
 
@@ -114,12 +114,21 @@ def register_page():
                            ' VALUES ( %s, %s, %s, %s, %s, %s)', (first_name, last_name, phone, address, password, email,))
             mysql.connection.commit()
             msg = 'You have successfully registered!'
+            return redirect(url_for('login_page', msg=msg))
 
     elif request.method == 'POST':
         # Form is empty... (no POST data)
         msg = 'Please fill out the form!'
     # Show registration form with message (if any)
     return render_template('register.html', msg=msg)
+
+
+@app.route('/order', methods=['GET', 'POST'])
+def order_page():
+    cursor = mysql.connection.cursor()
+    cursor.execute("SELECT * FROM menu")
+    data = cursor.fetchall()
+    return render_template('order.html', menu=data)
 
 
 if __name__ == '__main__':
