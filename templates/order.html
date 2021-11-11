@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+{% block title %}
+  Order | Ky Lin
+{% endblock %}
+
+{% block content %}
+
+    <h1>Menu</h1>
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+
+            {% for food in menu %}
+                    {% if 'APPETIZERS' in food.5  %}
+                    <tr>
+                        <td>{{ food.1 }}</td>
+                        <td>${{ food.2 }}</td>
+                        <td>{{ food.3 }}</td>
+                        <td>{{ food.5 }}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
+                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                        </td>
+                    </tr>
+                    {% elif 'SOUPS' in food.5  %}
+                    <tr>
+                        <td>{{ food.1 }}</td>
+                        <td>${{ food.2 }}</td>
+                        <td>{{ food.3 }}</td>
+                        <td>{{ food.5 }}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
+                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                        </td>
+                    </tr>
+                    {% elif 'NOODLE SOUPS' in food.5  %}
+                    <tr>
+                        <td>{{ food.1 }}</td>
+                        <td>${{ food.2 }}</td>
+                        <td>{{ food.3 }}</td>
+                        <td>{{ food.5 }}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
+                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                        </td>
+                    </tr>
+                    {% elif 'FRIED RICE' in food.5  %}
+                    <tr>
+                        <td>{{ food.1 }}</td>
+                        <td>${{ food.2 }}</td>
+                        <td>{{ food.3 }}</td>
+                        <td>{{ food.5 }}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
+                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                        </td>
+                    </tr>
+                    {% elif 'CHOW MEIN' in food.5  %}
+                    <tr>
+                        <td>{{ food.1 }}</td>
+                        <td>${{ food.2 }}</td>
+                        <td>{{ food.3 }}</td>
+                        <td>{{ food.5 }}</td>
+                        <td>
+                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
+                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
+                            <input type="submit" value="Add to Cart" class="btn btn-outline btn-success">
+                        </td>
+                    </tr>
+                {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
