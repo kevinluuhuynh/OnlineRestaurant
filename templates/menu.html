@@ -1,0 +1,94 @@
+{% extends 'base.html' %}
+{% block title %}
+  Menu | Ky Lin
+{% endblock %}
+
+{% block content %}
+<!--<div class="row">-->
+<!--	{% for dish in menu %}-->
+<!--	<div class="col-lg-3">-->
+<!--		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
+<!--			<div class="thumbnail">-->
+<!--				<div class="caption text-center">-->
+<!--					<h4 class="bold">{{ dish.dish_name }}</h4>-->
+<!--					<p>-->
+<!--						{{ dish.description }}-->
+<!--					</p>-->
+<!--					<hr />-->
+<!--				</div>-->
+<!--			</div>-->
+<!--		</div>-->
+<!--	</div>-->
+<!--	{% endfor %}-->
+
+    <table class="table table-hover table-dark">
+        <thead>
+            <tr>
+                <!-- Your Columns HERE -->
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+                <th scope="col">Description</th>
+                <th scope="col">Category</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for dish in menu %}
+                    {% if 'Appetizers' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100.0 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+
+                {% for dish in menu %}
+                    {% if 'Soups' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for dish in menu %}
+                    {% if 'Noodle Soups' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for dish in menu %}
+                    {% if 'Fried Rice' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+                {% for dish in menu %}
+                    {% if 'Chow Mein' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}
