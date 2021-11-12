@@ -2,8 +2,12 @@ from flask import Flask, render_template, request, redirect, url_for, session, f
 from flask_mysqldb import MySQL
 import MySQLdb.cursors
 import re
+from flask_sqlalchemy import SQLAlchemy
+from flask_migrate import Migrate, MigrateCommand
+from flask_script import Manager
 from flask_wtf import FlaskForm
 from wtforms import StringField, IntegerField, TextAreaField, HiddenField
+from flask_wtf.file import FileField, FileAllowed
 
 app = Flask(__name__)
 
@@ -12,9 +16,37 @@ app.config['MYSQL_USER'] = 'root'
 app.config['MYSQL_PASSWORD'] = 'root'
 app.config['MYSQL_DB'] = 'restaurant'
 app.config['SECRET_KEY'] = 'c3f3d37c905ea800401f0659'
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///checkout.db'
+app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+app.config['DEBUG'] = True
 
 mysql = MySQL(app)
+db = SQLAlchemy(app)
 
+migrate = Migrate(app, db)
+
+manager = Manager(app)
+manager.add_command('db', MigrateCommand)
+
+class MenuItem(db.Model):
+    menu_id = db.Column(db.Integer, primary_key=True)
+    dish_name = db.Column(db.String(50), unique=True)
+    price = db.Column(db.Integer)
+    size = db.Column(db.String(20))
+    description = db.Column(db.String(500))
+    category = db.Column(db.String(100))
+
+
+class AddMenuItem(FlaskForm):
+    dish_name = StringField('DishName')
+    price = IntegerField('Price')
+    size = StringField('Size')
+    description = TextAreaField('Description')
+    category = StringField('Category')
+
+class AddToCart(FlaskForm):
+    quantity = IntegerField('Quantity')
+    menu_id = HiddenField('ID')
 
 @app.route('/')
 @app.route('/home')
@@ -124,8 +156,53 @@ def register_page():
     # Show registration form with message (if any)
     return render_template('register.html', msg=msg)
 
+@app.route('/add-to-cart', methods=['POST'])
+def add_to_cart():
+    if 'cart' not in session:
+        session['cart'] = []
 
-@app.route('/order', methods=['GET', 'POST'])
+    form = AddToCart()
+
+    if form.validate_on_submit():
+        session['cart'].append({'menu_id' : form.menu_id.data, 'quantity' : form.quantity.data})
+        session.modified = True
+
+    return redirect(url_for('menu_page'))
+
+
+@app.route('/cart')
+def cart():
+    menu_items = []
+    grand_total = 0
+    index = 0
+
+    for item in session['cart']:
+        menu_item = MenuItem.query.filter_by(menu_id=item['menu_id']).first()
+
+        quantity = int(item['quantity'])
+        total = quantity * menu_item.price
+        grand_total += total
+
+        menu_items.append({'menu_id': menu_item.id, 'dish_name': menu_item.name, 'price': menu_item.price,
+                         'quantity': quantity, 'total': total, 'index': index})
+        index += 1
+
+    grand_total_plus_tax = grand_total * 1.07
+
+    return render_template('cart.html', menu_items=menu_items, grand_total=grand_total,
+                           grand_total_plus_shipping=grand_total_plus_tax)
+
+@app.route('/remove-from-cart/<index>')
+def remove_from_cart(index):
+    del session['cart'][int(index)]
+    session.modified = True
+    return redirect(url_for('cart'))
+
+@app.route('/checkout')
+def checkout():
+    return render_template('checkout.html')
+
+""""@app.route('/order', methods=['GET', 'POST'])
 def order_page():
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM menu")
@@ -191,6 +268,7 @@ def add_product_to_cart():
     cursor.close()
     conn.close()
 
+
 @app.route('/empty')
 def empty_cart():
  try:
@@ -203,6 +281,7 @@ def empty_cart():
 @app.route('/cart')
 def cart_page():
     return render_template('cart.html')
+"""
 
 if __name__ == '__main__':
     app.run(debug=True)
