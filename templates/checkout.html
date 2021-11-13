@@ -1,12 +1,12 @@
 {% extends "base.html" %}
 
-{% block title %}Checkout | Trendy Fashion Store{% endblock %}
+{% block title %}Checkout | Ky Lin{% endblock %}
 
 {% block body %}
 <div class="row">
 	<div class="col-lg-8">
 		<h3 class="bold">
-			<i class="glyphicon glyphicon-pencil"></i> Shipping Information
+			<i class="glyphicon glyphicon-pencil"></i> Customer Information
 		</h3>
 
 		<div class="panel panel-primary">
@@ -19,22 +19,22 @@
 					{{ form.csrf_token }}
 					<div class="col-lg-6">
 						<div class="form-group">
-							<label>Firstname</label>
-							{{ form.first_name(class='form-control') }}
+							<label>First Name</label>
+							{{ form.chk_firstname(class='form-control') }}
 						</div>
 						<div class="form-group">
-							<label>Lastname</label>
-							{{ form.last_name(class='form-control') }}
+							<label>Last Name</label>
+							{{ form.chk_lastname(class='form-control') }}
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label>Phone Number</label>
-							{{ form.phone_number(class='form-control') }}
+							{{ form.chk_phone(class='form-control') }}
 						</div>
 						<div class="form-group">
 							<label>Email</label>
-							{{ form.email(class='form-control') }}
+							{{ form.chk_email(class='form-control') }}
 						</div>
 					</div>
 				</div>
@@ -46,21 +46,17 @@
 					<div class="col-lg-6">
 						<div class="form-group">
 							<label>Address</label>
-							{{ form.address(class='form-control') }}
+							{{ form.chk_address(class='form-control') }}
 						</div>
 						<div class="form-group">
 							<label>City</label>
-							{{ form.city(class='form-control') }}
+							{{ form.chk_city(class='form-control') }}
 						</div>
 					</div>
 					<div class="col-lg-6">
 						<div class="form-group">
-							<label>State</label>
-							{{ form.state(class='form-control') }}
-						</div>
-						<div class="form-group">
-							<label>Country</label>
-							{{ form.country(class='form-control') }}
+							<label>Zip Code</label>
+							{{ form.chk_zip(class='form-control') }}
 						</div>
 					</div>
 				</div>
@@ -71,8 +67,26 @@
 					</div>
 					<div class="col-lg-6">
 						<div class="form-group">
-							<label>Payment Option</label>
-							{{ form.payment_type(class='form-control') }}
+							<label>Credit Card Number</label>
+							{{ form.chk_cc_number(class='form-control') }}
+						</div>
+						<div class="form-group">
+							<label>Security Code</label>
+							{{ form.chk_cc_code(class='form-control') }}
+						</div>
+						<div class="form-group">
+							<label>Expiration Date</label>
+							{{ form.chk_cc_exp(class='form-control') }}
+						</div>
+					</div>
+					<div class="col-lg-6">
+						<div class="form-group">
+							<label>Name on Card</label>
+							{{ form.chk_cc_name(class='form-control') }}
+						</div>
+						<div class="form-group">
+							<label>Billing Zip Code</label>
+							{{ form.chk_cc_zip(class='form-control') }}
 						</div>
 					</div>
 				</div>
@@ -97,32 +111,17 @@
 				Current Cart Value
 			</div>
 			<ul class="list-group">
-				<li class="list-group-item">
+				<li class="list-group-item" style="color: black">
 					<p>
 						{{ quantity_total }} Items <strong class="pull-right">&dollar;{{ grand_total / 100 }}</strong>
 					</p>
 					<p>
-						24hr Shipping <strong class="pull-right">&dollar;10</strong>
+						Tax <strong class="pull-right">&dollar;{{(grand_total_plus_tax - grand_total) / 100}}</strong>
 					</p>
 				</li>
-				<li class="list-group-item">
-					<p>Total <strong class="pull-right">&dollar;{{ grand_total_plus_shipping / 100 }}</strong></p>
+				<li class="list-group-item" style="color: black">
+					<p>Total <strong class="pull-right">&dollar;{{ grand_total_plus_tax / 100 }}</strong></p>
 				</li>
-			</ul>
-		</div>
-
-		<div class="panel panel-primary">
-			<div class="panel-heading">
-				<h3 class="panel-title">Benefits</h3>
-			</div>
-			<div class="panel-body">
-				Some of the benefits of shopping with us include:
-			</div>
-			<ul class="list-group">
-				<li class="list-group-item">Buyer Protection</li>
-				<li class="list-group-item">Next Day Delivery</li>
-				<li class="list-group-item">Flexible Payment Options</li>
-				<li class="list-group-item">7day Money Back Guarantee</li>
 			</ul>
 		</div>
 	</div>

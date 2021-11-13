@@ -6,7 +6,8 @@ from flask_sqlalchemy import SQLAlchemy
 from flask_migrate import Migrate, MigrateCommand
 from flask_script import Manager
 from flask_wtf import FlaskForm
-from wtforms import StringField, IntegerField, TextAreaField, HiddenField
+from wtforms import StringField, IntegerField, TextAreaField, HiddenField, SelectField
+import random
 from flask_wtf.file import FileField, FileAllowed
 
 app = Flask(__name__)
@@ -50,6 +51,64 @@ class AddToCart(FlaskForm):
     menu_id = HiddenField('ID')
 
 
+class Order(db.Model):
+    order_id = db.Column(db.Integer, primary_key=True)
+    order_reference = db.Column(db.String(5))
+    order_firstname = db.Column(db.String(20))
+    order_lastname = db.Column(db.String(20))
+    order_phone = db.Column(db.Integer)
+    order_email = db.Column(db.String(50))
+    order_address = db.Column(db.String(100))
+    order_city = db.Column(db.String(100))
+    order_zip = db.Column(db.String(20))
+    order_status = db.Column(db.String(10))
+    order_items = db.relationship('Order_Item', backref='order', lazy=True)
+
+class Order_Item(db.Model):
+    order_item_id = db.Column(db.Integer, primary_key=True)
+    order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'))
+    menu_id = db.Column(db.Integer, db.ForeignKey('menuitem.menu_id'))
+    quantity = db.Column(db.Integer)
+
+class Checkout(FlaskForm):
+    chk_firstname = StringField('First Name')
+    chk_lastname = StringField('LastName')
+    chk_phone = StringField('Phone Number')
+    chk_email = StringField('Email')
+    chk_address = StringField('Address')
+    chk_city = StringField('City')
+    chk_zip = StringField('Zip Code')
+    chk_cc_number = StringField('Credit Card Number')
+    chk_cc_code = StringField('Security Code')
+    chk_cc_exp = StringField('Expiration Date (mmyy)')
+    chk_cc_name = StringField('Name on Card')
+    chk_cc_zip = StringField('Billing Zip Code')
+
+
+def handle_cart():
+    menu_items = []
+    grand_total = 0
+    index = 0
+    quantity_total = 0
+
+    for dish in session['cart']:
+        menu_item = MenuItem.query.filter_by(menu_id=dish['menu_id']).first()
+
+        quantity = int(dish['quantity'])
+        total = quantity * menu_item.price
+        grand_total += total
+
+        quantity_total += quantity
+
+        menu_items.append({'menu_id': menu_item.menu_id, 'dish': menu_item.dish_name, 'price': menu_item.price,
+                         'quantity': quantity, 'total': total, 'index': index})
+        index += 1
+
+    grand_total_plus_tax = grand_total * 1.07
+
+    return menu_items, grand_total, grand_total_plus_tax, quantity_total
+
+
 @app.route('/')
 
 
@@ -66,12 +125,6 @@ def menu_page():
     menu = MenuItem.query.all()
 
     return render_template('menu.html', menu=menu)
-"""def menu_page():
-    cursor = mysql.connection.cursor()
-    cursor.execute("SELECT * FROM menu")
-    data = cursor.fetchall()
-    return render_template('menu.html', menu=data)"""
-
 
 
 @app.route('/login', methods=['GET', 'POST'])
@@ -227,9 +280,33 @@ def remove_from_cart(index):
     session.modified = True
     return redirect(url_for('cart'))
 
-@app.route('/checkout')
+@app.route('/checkout', methods=['GET', 'POST'])
 def checkout():
-    return render_template('checkout.html')
+    form = Checkout()
+
+    menu_items, grand_total, grand_total_plus_tax, quantity_total = handle_cart()
+
+    if form.validate_on_submit():
+
+        order = Order()
+        form.populate_obj(order)
+        order.reference = ''.join([random.choice('ABCDE') for _ in range(5)])
+        order.status = 'PENDING'
+
+        for menu_item in menu_items:
+            order_item = Order_Item(quantity=menu_item['quantity'], menu_id=menu_item['menu_id'])
+            order.order_items.append(order_item)
+
+        db.session.add(order)
+        db.session.commit()
+
+        session['cart'] = []
+        session.modified = True
+
+        return redirect(url_for('thankyou_page'))
+
+    return render_template('checkout.html', form=form, grand_total=grand_total,
+                           grand_total_plus_tax=grand_total_plus_tax, quantity_total=quantity_total)
 
 @app.route('/order', methods=['GET', 'POST'])
 def order_page():
@@ -240,79 +317,9 @@ def order_page():
     data = cursor.fetchall()
     return render_template('order.html', data=data, menu=menu, form=form)
 
-"""
-def array_merge(first_array, second_array):
-    if isinstance(first_array, list) and isinstance(second_array, list):
-        return first_array + second_array
-    elif isinstance(first_array, dict) and isinstance(second_array, dict):
-        return dict(list(first_array.items()) + list(second_array.items()))
-    elif isinstance(first_array, set) and isinstance(second_array, set):
-        return first_array.union(second_array)
-    return False
-
-
-@app.route('/add', methods=['POST'])
-def add_product_to_cart():
-    cursor = None
-
-    _quantity = int(request.form['quantity'])
-    _id = request.form['menu_id']
-
-    if _quantity and _id and request.method == 'POST':
-        cursor = mysql.connection.cursor()
-        cursor.execute("SELECT * FROM menu WHERE menu_id=%s", _id)
-        row = cursor.fetchone()
-        itemArray = {row['menu_id']: {'name': row['name'], 'menu_id': row['menu_id'], 'quantity': _quantity,
-                                      'price': row['price'],
-                                      'total_price': _quantity * row['price']}}
-
-    all_total_price = 0
-    all_total_quantity = 0
-
-    session.modified = True
-    if 'cart_item' in session:
-        if row['menu_id'] in session['cart_item']:
-            for key, value in session['cart_item'].items():
-                if row['menu_id'] == key:
-                    old_quantity = session['cart_item'][key]['quantity']
-                    total_quantity = old_quantity + _quantity
-                    session['cart_item'][key]['quantity'] = total_quantity
-                    session['cart_item'][key]['total_price'] = total_quantity * row['price']
-        else:
-            session['cart_item'] = array_merge(session['cart_item'], itemArray)
-
-        for key, value in session['cart_item'].items():
-            individual_quantity = int(session['cart_item'][key]['quantity'])
-            individual_price = float(session['cart_item'][key]['total_price'])
-            all_total_quantity = all_total_quantity + individual_quantity
-            all_total_price = all_total_price + individual_price
-    else:
-        session['cart_item'] = itemArray
-        all_total_quantity = all_total_quantity + _quantity
-        all_total_price = all_total_price + _quantity * row['price']
-
-    session['all_total_quantity'] = all_total_quantity
-    session['all_total_price'] = all_total_price
-
-    return redirect(url_for('cart_page'))
-
-    cursor.close()
-    conn.close()
-
-
-@app.route('/empty')
-def empty_cart():
- try:
-  session.clear()
-  return redirect(url_for('.products'))
- except Exception as e:
-  print(e)
-
-
-@app.route('/cart')
-def cart_page():
-    return render_template('cart.html')
-"""
+@app.route('/thankyou', methods=['GET', 'POST'])
+def thankyou_page():
+    return render_template('thankyou.html')
 
 if __name__ == '__main__':
     app.run(debug=True)
