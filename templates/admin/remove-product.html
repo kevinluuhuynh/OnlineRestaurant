@@ -1,18 +1,18 @@
 {% extends "base.html" %}
 
-{% block title %}Add New Product | Ky Lin{% endblock %}
+{% block title %}Remove Item | Ky Lin{% endblock %}
 
 {% block body %}
 <div class="row pad">
 	<div class="col-lg-12">
-		<h2 class="bold text-center">Add New Dish To The Inventory</h2>
+		<h2 class="bold text-center">Remove a Dish from the Menu</h2>
 	</div>
 </div>
 
 <div class="row">
 	<div class="col-lg-10 col-lg-offset-1">
 		<div class="panel panel-default">
-			<form method="POST" action="{{ url_for('add') }}" enctype="multipart/form-data">
+			<form method="POST" action="{{ url_for('remove') }}" enctype="multipart/form-data">
 				<div class="panel-body">
 					<div class="row">
 						{{ form.csrf_token }}
@@ -21,34 +21,12 @@
 								<label>Dish Name</label>
 								{{ form.dish_name(class='form-control') }}
 							</div>
-
-							<div class="form-group">
-								<label>Price</label>
-								{{ form.price(class='form-control') }}
-							</div>
-
-							<div class="form-group">
-								<label>Size</label>
-								{{ form.size(class='form-control') }}
-							</div>
-						</div>
-						<div class="col-lg-6">
-							<div class="form-group">
-								<div class="form-group">
-									<label>Description</label>
-									{{ form.description(class='form-control') }}
-								</div>
-
-								<label>Category</label>
-								{{ form.category(class='form-control') }}
-							</div>
 						</div>
 					</div>
 				</div>
-
 				<div class="panel-footer">
 					<button type="submit" class="btn btn-primary">
-						<i class="glyphicon glyphicon-plus-sign"></i> Save Product
+						<i class="glyphicon glyphicon-plus-sign"></i> Remove Menu Item
 					</button>
 				</div>
 			</form>

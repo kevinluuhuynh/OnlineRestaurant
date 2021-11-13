@@ -46,6 +46,10 @@ class AddMenuItem(FlaskForm):
     category = StringField('Category')
 
 
+class RemoveMenuItem(FlaskForm):
+    dish_name = StringField('DishName')
+
+
 class AddToCart(FlaskForm):
     quantity = IntegerField('Quantity')
     menu_id = HiddenField('ID')
@@ -67,7 +71,7 @@ class Order(db.Model):
 class Order_Item(db.Model):
     order_item_id = db.Column(db.Integer, primary_key=True)
     order_id = db.Column(db.Integer, db.ForeignKey('order.order_id'))
-    menu_id = db.Column(db.Integer, db.ForeignKey('menuitem.menu_id'))
+    menu_id = db.Column(db.Integer, db.ForeignKey('menu_item.menu_id'))
     quantity = db.Column(db.Integer)
 
 class Checkout(FlaskForm):
@@ -238,6 +242,22 @@ def add():
         return redirect(url_for('admin'))
 
     return render_template('admin/add-product.html', admin=True, form=form)
+
+
+@app.route('/admin/remove', methods=['GET', 'POST'])
+def remove():
+    form = RemoveMenuItem()
+
+    if form.validate_on_submit():
+        removed_dish = form.dish_name.data
+
+        MenuItem.query.filter(MenuItem.dish_name==removed_dish).delete()
+        db.session.commit()
+
+        return redirect(url_for('admin'))
+
+    return render_template('admin/remove-product.html', admin=True, form=form)
+
 
 @app.route('/add-to-cart', methods=['POST'])
 def add_to_cart():
