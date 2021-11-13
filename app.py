@@ -177,7 +177,6 @@ def add():
     form = AddMenuItem()
 
     if form.validate_on_submit():
-
         new_dish = MenuItem(dish_name=form.dish_name.data, price=form.price.data, size=form.size.data, description=form.description.data, category=form.category.data)
 
         db.session.add(new_dish)
@@ -193,12 +192,11 @@ def add_to_cart():
         session['cart'] = []
 
     form = AddToCart()
-
     if form.validate_on_submit():
         session['cart'].append({'menu_id' : form.menu_id.data, 'quantity' : form.quantity.data})
         session.modified = True
-
-    return redirect(url_for('menu_page'))
+    print(session['cart'])
+    return redirect(url_for('order_page'))
 
 
 @app.route('/cart')
@@ -214,14 +212,14 @@ def cart():
         total = quantity * menu_item.price
         grand_total += total
 
-        menu_items.append({'menu_id': menu_item.id, 'dish_name': menu_item.name, 'price': menu_item.price,
+        menu_items.append({'menu_id': menu_item.menu_id, 'dish_name': menu_item.dish_name, 'price': menu_item.price,
                          'quantity': quantity, 'total': total, 'index': index})
         index += 1
 
     grand_total_plus_tax = grand_total * 1.07
 
     return render_template('cart.html', menu_items=menu_items, grand_total=grand_total,
-                           grand_total_plus_shipping=grand_total_plus_tax)
+                           grand_total_plus_tax=grand_total_plus_tax)
 
 @app.route('/remove-from-cart/<index>')
 def remove_from_cart(index):
@@ -235,11 +233,12 @@ def checkout():
 
 @app.route('/order', methods=['GET', 'POST'])
 def order_page():
+    form = AddToCart()
     menu = MenuItem.query.all()
     cursor = mysql.connection.cursor()
     cursor.execute("SELECT * FROM menu")
     data = cursor.fetchall()
-    return render_template('order.html', data=data, menu=menu)
+    return render_template('order.html', data=data, menu=menu, form=form)
 
 """
 def array_merge(first_array, second_array):
