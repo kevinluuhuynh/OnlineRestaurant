@@ -23,7 +23,7 @@
                     {% if 'Appetizers' in dish.category  %}
                     <tr>
                         <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100.0 }}</td>
+                        <td>${{ "{:,.2f}".format(dish.price / 100.0) }}</td>
                         <td>{{ dish.size }}</td>
                         <td>{{ dish.description }}</td>
                         <td>{{ dish.category }}

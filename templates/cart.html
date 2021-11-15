@@ -8,18 +8,18 @@
 		<h3 class="bold">
 			<i class="glyphicon glyphicon-shopping-cart"></i> Your Shopping Cart
 		</h3>
-
+		<br>
 		<div class="panel panel-primary">
 			<div class="panel-body">
 				{% for dish in menu_items %}
 				<div class="row">
-					<div class="col-lg-4">
+					<div class="col-lg-8">
 						<h5 class="bold">{{ dish['dish_name'] }}</h5>
-						<p>&dollar;{{ dish['price'] / 100 }}</p>
+						<p>{{ "${:,.2f}".format(dish['price'] / 100) }}</p>
 						<br />
 						<p>
 							<a href="{{ url_for('remove_from_cart', index=dish['index']) }}">
-							<button type="button" class="btn btn-danger btn-xs">		
+							<button type="button" class="btn btn-danger btn-xs">
 								<i class="glyphicon glyphicon-trash">Remove Item</i>
 							</button></a>
 						</p>
@@ -33,7 +33,7 @@
 					<div class="col-lg-2">
 						<h5>Total</h5>
 						<p>
-							<strong>&dollar;{{ dish['total'] / 100 }}</strong>
+							<strong>{{ "${:,.2f}".format(dish['total'] / 100) }}</strong>
 						</p>
 					</div>
 				</div>
@@ -54,14 +54,14 @@
 			<ul class="list-group">
 				<li class="list-group-item" style="color:black">
 					<p>
-						{{ quantity_total }} Items <strong class="pull-right">&dollar;{{ grand_total / 100 }}</strong>
+						{{ quantity_total }} Subtotal <strong class="pull-right">{{ "${:,.2f}".format(grand_total / 100) }}</strong>
 					</p>
 					<p>
-						Tax <strong class="pull-right">${{(grand_total_plus_tax - grand_total) / 100}}</strong>
+						Tax <strong class="pull-right">{{ "${:,.2f}".format((grand_total_plus_tax - grand_total) / 100) }}</strong>
 					</p>
 				</li>
 				<li class="list-group-item" style="color:black">
-					<p>Total <strong class="pull-right">&dollar;{{ grand_total_plus_tax / 100 }}</strong></p>
+					<p>Total <strong class="pull-right">{{ "${:,.2f}".format(grand_total_plus_tax / 100) }}</strong></p>
 				</li>
 			</ul>
 			<div class="panel-footer">

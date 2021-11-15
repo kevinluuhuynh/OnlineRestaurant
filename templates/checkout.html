@@ -113,14 +113,14 @@
 			<ul class="list-group">
 				<li class="list-group-item" style="color: black">
 					<p>
-						{{ quantity_total }} Items <strong class="pull-right">&dollar;{{ grand_total / 100 }}</strong>
+						Subtotal for {{ quantity_total }} Items <strong class="pull-right">{{ "${:,.2f}".format(grand_total / 100) }}</strong>
 					</p>
 					<p>
-						Tax <strong class="pull-right">&dollar;{{(grand_total_plus_tax - grand_total) / 100}}</strong>
+						Tax <strong class="pull-right">{{ "${:,.2f}".format((grand_total_plus_tax - grand_total) / 100) }}</strong>
 					</p>
 				</li>
 				<li class="list-group-item" style="color: black">
-					<p>Total <strong class="pull-right">&dollar;{{ grand_total_plus_tax / 100 }}</strong></p>
+					<p>Total <strong class="pull-right">{{ "${:,.2f}".format(grand_total_plus_tax / 100) }}</strong></p>
 				</li>
 			</ul>
 		</div>
