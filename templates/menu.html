@@ -1,94 +1,532 @@
+<!DOCTYPE HTML>
 {% extends 'base.html' %}
 {% block title %}
   Menu | Ky Lin
 {% endblock %}
 
 {% block content %}
-<!--<div class="row">-->
-<!--	{% for dish in menu %}-->
-<!--	<div class="col-lg-3">-->
-<!--		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">-->
-<!--			<div class="thumbnail">-->
-<!--				<div class="caption text-center">-->
-<!--					<h4 class="bold">{{ dish.dish_name }}</h4>-->
-<!--					<p>-->
-<!--						{{ dish.description }}-->
-<!--					</p>-->
-<!--					<hr />-->
-<!--				</div>-->
-<!--			</div>-->
-<!--		</div>-->
-<!--	</div>-->
-<!--	{% endfor %}-->
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width-device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{{url_for('static', filename='menu.css')}}">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<title>Menu</title>
+<body class="background">
+    <div class="container">
+        <div class="menu">
+            <h1 class="menu-group-heading">
+                Appetizers
+            </h1>
+            <div class="menu-group">
+                 <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Shrimp Wonton (8)</span>
+                            <span class="menu-item-price">5.75</span>
+                        </h3>
+                     </div>
+                        <img src="{{ url_for('static', filename= 'pictures/friedShrimpWonton.jpg')}}" alt="Fried Shrimp Wonton" class="menu-item-image">
+                 </div>
+                <div class="menu-item">
+                    <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">BBQ Beef Stick (2)</span>
+                            <span class="menu-item-price">5.95</span>
+                        </h3>
+                    </div>
+                        <img src="{{ url_for('static', filename= 'pictures/barbequeBeefStick.jpg')}}" alt="BBQ Beef Stick " class="menu-item-image">
+                 </div>
+            </div>
 
-    <table class="table table-hover table-dark">
-        <thead>
-            <tr>
-                <!-- Your Columns HERE -->
-                <th scope="col">Name</th>
-                <th scope="col">Price</th>
-                <th scope="col">Size</th>
-                <th scope="col">Description</th>
-                <th scope="col">Category</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for dish in menu %}
-                    {% if 'Appetizers' in dish.category  %}
-                    <tr>
-                        <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100.0 }}</td>
-                        <td>{{ dish.size }}</td>
-                        <td>{{ dish.description }}</td>
-                        <td>{{ dish.category }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
 
-                {% for dish in menu %}
-                    {% if 'Soups' in dish.category  %}
-                    <tr>
-                        <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100 }}</td>
-                        <td>{{ dish.size }}</td>
-                        <td>{{ dish.description }}</td>
-                        <td>{{ dish.category }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                {% for dish in menu %}
-                    {% if 'Noodle Soups' in dish.category  %}
-                    <tr>
-                        <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100 }}</td>
-                        <td>{{ dish.size }}</td>
-                        <td>{{ dish.description }}</td>
-                        <td>{{ dish.category }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                {% for dish in menu %}
-                    {% if 'Fried Rice' in dish.category  %}
-                    <tr>
-                        <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100 }}</td>
-                        <td>{{ dish.size }}</td>
-                        <td>{{ dish.description }}</td>
-                        <td>{{ dish.category }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-                {% for dish in menu %}
-                    {% if 'Chow Mein' in dish.category  %}
-                    <tr>
-                        <td>{{ dish.dish_name }}</td>
-                        <td>${{dish.price / 100 }}</td>
-                        <td>{{ dish.size }}</td>
-                        <td>{{ dish.description }}</td>
-                        <td>{{ dish.category }}</td>
-                    </tr>
-                    {% endif %}
-                {% endfor %}
-        </tbody>
-    </table>
+            <div class="menu-group">
+                 <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Vegetable Spring Rolls - (2pcs)</span>
+                            <span class="menu-item-price">2.95</span>
+                        </h3>
+                    </div>
+                 </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Shrimp (5pcs) </span>
+                            <span class="menu-item-price">7.95</span>
+                        </h3>
+                    </div>
+                 </div>
+        </div>
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Roast Pork Egg Roll- (1pcs)   </span>
+                            <span class="menu-item-price">1.70</span>
+                        </h3>
+                    </div>
+                 </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Shrimp Egg Roll   </span>
+                            <span class="menu-item-price">1.70</span>
+                        </h3>
+                    </div>
+                 </div>
+        </div>
+
+             <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Chicken Nuggets   </span>
+                            <span class="menu-item-price">6.95</span>
+                        </h3>
+                     </div>
+                </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Wonton (8) Pork   </span>
+                            <span class="menu-item-price">5.75</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                       <div class="menu-item-text">
+                          <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Roast Pork Egg Roll- (1pcs)   </span>
+                            <span class="menu-item-price">1.70</span>
+                        </h3>
+                    </div>
+                </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Shrimp Egg Roll   </span>
+                            <span class="menu-item-price">1.70</span>
+                        </h3>
+                    </div>
+                 </div>
+         </div>
+
+            <div class="menu-group">
+             <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Shrimp Puff   </span>
+                            <span class="menu-item-price">8.95</span>
+                        </h3>
+                    </div>
+             </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Crab Stick (4)   </span>
+                            <span class="menu-item-price">4.95</span>
+                        </h3>
+                    </div>
+                 </div>
+         </div>
+
+
+        <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">BBQ Ribs </span>
+                            <span class="menu-item-price">(S) 8.25  (L) 15.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Boneless Spare Rib</span>
+                            <span class="menu-item-price">(S) 7.95  (L) 12.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+         <div class="menu-group">
+             <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">BBQ Beef Stick (2)</span>
+                            <span class="menu-item-price">5.95</span>
+                        </h3>
+                    </div>
+             </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried or Steamed Dumpling (Pork) (6)  </span>
+                            <span class="menu-item-price">6.95</span>
+                        </h3>
+                    </div>
+                 </div>
+         </div>
+
+
+        <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name text">Buffalo Wings w. Hot Spicy Sauce</span>
+                            <span class="menu-item-price">7.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fried Chicken Wings (4)  </span>
+                            <span class="menu-item-price">5.95</span>
+                        </h3>
+                    </div>
+                     <img src="{{ url_for('static', filename= 'pictures/friedChickenWings.jpg')}}" alt="BScallion Pancake " class="menu-item-image">
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Sesame Cold Noodle </span>
+                            <span class="menu-item-price">4.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Cheese Walton (8)</span>
+                            <span class="menu-item-price">5.75</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+             <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">French Fries</span>
+                            <span class="menu-item-price">3.50</span>
+                        </h3>
+                    </div>
+             </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">PU PU Platter For Two  </span>
+                            <span class="menu-item-price">13.95</span>
+                        </h3>
+                    </div>
+                 </div>
+            </div>
+
+
+            <div class="menu-group">
+                 <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Scallion Pancake</span>
+                            <span class="menu-item-price">3.95</span>
+                        </h3>
+                    </div>
+                 <img src="{{ url_for('static', filename= 'pictures/scallionPancake.jpg')}}" alt="BScallion Pancake " class="menu-item-image">
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Thai Fish Cake </span>
+                            <span class="menu-item-price">7.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+         <h1 class="menu-group-heading pt-4">
+               Soups
+            </h1>
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Wonton Soup</span>
+                            <span class="menu-item-price">(S) 2.75  (L) 4.95</span>
+                        </h3>
+                    </div>
+                 <img src="{{ url_for('static', filename= 'pictures/WantonSoup.jpg')}}" alt="Wanton Soup " class="menu-item-image">
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Egg Drop Soup </span>
+                            <span class="menu-item-price">(S) 2.75  (L) 4.95</span>
+                        </h3>
+                    </div>
+                    <img src="{{ url_for('static', filename= 'pictures/EggDropSoup.jpg')}}" alt="Egg Drop Soup " class="menu-item-image">
+                </div>
+         </div>
+
+
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name text">Hot & Sour Soup</span>
+                            <span class="menu-item-price">(S) 2.75  (L) 4.95</span>
+                        </h3>
+                    </div>
+                <img src="{{ url_for('static', filename= 'pictures/HotSourSoup.jpg')}}" alt="Hot & Sour Soup " class="menu-item-image">
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Vegetable & Bean Curd Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+
+                    </div>
+                </div>
+         </div>
+
+
+      <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Seafood Soup</span>
+                            <span class="menu-item-price">13.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">House Special Soup w. Wonton</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Seafood w. Seaweed</span>
+                            <span class="menu-item-price">13.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Seafood Lemon Grass (Tom Yum) </span>
+                            <span class="menu-item-price">10.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Shrimp Wonton Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+                <img src="{{ url_for('static', filename= 'pictures/ShrimpWontonNoodleSoup.jpg')}}" alt="Shrimp Wonton Noodle Soup " class="menu-item-image">
+            </div>
+        </div>
+
+           <h1 class="menu-group-heading pt-4">
+               Noodle Soups
+            </h1>
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Pork or Chicken w. Veg Noodles Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Fish Ball Noodle Soup </span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+
+                    </div>
+                </div>
+         </div>
+
+
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Vegetable Noodle Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name text">Curry Shrimp w. Noodles</span>
+                            <span class="menu-item-price">10.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+      <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name text">Seafood Lemon Grass w. Noodles</span>
+                            <span class="menu-item-price">10.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Shrimp Wonton Noodle Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                       <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Beef Flank Noodles Soup</span>
+                            <span class="menu-item-price">9.95</span>
+                        </h3>
+                    </div>
+                <img src="{{ url_for('static', filename= 'pictures/beefFlankNoodleSoup.jpg')}}" alt="Wanton Soup " class="menu-item-image">
+                </div>
+            </div>
+
+            <h1 class="menu-group-heading pt-4">
+              Fried Rice
+            </h1>
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Vegetable Fried Rice</span>
+                            <span class="menu-item-price">Pt 5.95  Qt 8.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Roast Pork or Chicken Fried Rice</span>
+                            <span class="menu-item-price">Pt 5.95 Qt 9.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+          <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Beef or Shrimp Fried Rice</span>
+                            <span class="menu-item-price">Pt 5.95  Qt 10.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Crab Meat Fried Rice</span>
+                            <span class="menu-item-price">Pt 5.95  Qt 9.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+      <div class="menu-group">
+            <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">House Special Fried Rice</span>
+                            <span class="menu-item-price">Pt 7.95  Qt 12.95</span>
+                        </h3>
+                    </div>
+            </div>
+                <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Young Chow Fried Rice</span>
+                            <span class="menu-item-price">12.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+
+
+            <div class="menu-group">
+                <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Pineapple Fried Rice</span>
+                            <span class="menu-item-price">12.95</span>
+                        </h3>
+                    </div>
+                <img src="{{ url_for('static', filename= 'pictures/PineappleFriedRice.jpg')}}" alt="Pineapple Fried Rice " class="menu-item-image">
+            </div>
+            <div class="menu-item">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Indonesia Fried Rice</span>
+                            <span class="menu-item-price">12.95</span>
+                        </h3>
+                    </div>
+                </div>
+         </div>
+                 <div class="menu-group">
+                    <div class="menu-item pr-4">
+                     <div class="menu-item-text">
+                        <h3 class="menu-item-heading">
+                            <span class="menu-item-name">Seafood Fried Rice</span>
+                            <span class="menu-item-price">13.95</span>
+                        </h3>
+                    </div>
+                </div>
+           </div>
+    </div>
+ </div>
+ </div>
+</body>
 {% endblock %}
