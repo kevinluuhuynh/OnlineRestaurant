@@ -1,0 +1,104 @@
+.background{
+    background-color:rgb(255,229,204);
+}
+.navbar{
+    font-size: 25px;
+}
+
+.navbar-brand{
+    font-size: 25px;
+}
+.container{
+    max-width:1400px;
+    margin 0 auto;
+    padding 1.5em;
+    margin: 50px auto;
+}
+.menu{
+    font-family: 'EB Garamond', serif;
+    font-size: 14px;
+    color: black;
+    border: 3px double gray;
+    border-radius: 15px;
+    padding: 30px 20px 30px 20px;
+    margin:25px 10px;
+}
+
+.menu-group{
+    display: grid;
+    grid-gap: 40px;
+    grid-template-columns: 1fr;
+    padding: 1.5em 0;
+}
+
+.menu-group-heading{
+    margin: 30px 0;
+    padding-bottom: 1em;
+    border-bottom: 2px double gray;
+    text-align:center;
+    font-family: 'EB Garamond', serif;
+}
+
+.menu-item-heading{
+    display: flex;
+    justify-content: space-between;
+    margin:0;
+}
+
+.menu-item{
+    display:flex;
+  }
+
+.menu-item-image{
+    width: 80px;
+    height: 80px;
+    flex-shrink: 0;
+    object-fit: cover;
+    margin-left: 1.5em;
+
+}
+.menu-item-text{
+    flex-grow: 1;
+}
+
+.menu-item-heading{
+    display: flex;
+    justify-content: space-between;
+    margin: 0;
+}
+
+.menu-item-name{
+    margin-right: 1.5em;
+    font-size: 25px;
+}
+
+.menu-item-price{
+      font-size: 25px;
+ }
+
+.h1{
+    font-size: 20px solid;
+    text-align: center;
+    margin: 20px 0;
+}
+.gap{
+     margin-right:10px;
+}
+
+.text{
+    color: red;
+ }
+
+
+@media screen and (min-width:992px){
+    .menu{
+        font-size:16px;
+    }
+     .menu-group{
+        grid-template-columns: repeat(2, 1fr);
+     }
+     .menu-item-image{
+        width: 125px;
+        height: 125px;
+    }
+}
