@@ -23,7 +23,7 @@ h1{
     font-family: 'EB Garamond', serif;
     font-size: 25px;
     color: black;
-    border: 3px double gray;
+    border-width: 3px double gray;
     border-radius: 15px;
     padding: 30px 20px 30px 20px;
     margin:25px 10px;
