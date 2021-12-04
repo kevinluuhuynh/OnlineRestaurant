@@ -1,86 +1,225 @@
+{% from "_render_field.html" import render_field, render_radio_fields %}
+<!DOCTYPE HTML>
 {% extends 'base.html' %}
 {% block title %}
   Order | Ky Lin
 {% endblock %}
 
 {% block content %}
-
-    <h1>Menu</h1>
-    <table class="table table-hover table-dark">
+<head >
+     <meta name="viewport" content="width-device-width, initial-scale=1.0">
+     <link rel="stylesheet" href="{{url_for('static', filename='order.css')}}">
+     <link rel="preconnect" href="https://fonts.googleapis.com">
+</head>
+<title>Menu</title>
+<body class="background">
+ <h1>Menu</h1>
+  <div class="container">
+    <table class="table table-hover">
         <thead>
             <tr>
-                <!-- Your Columns HERE -->
                 <th scope="col">Name</th>
                 <th scope="col">Price</th>
-                <th scope="col">Size</th>
-                <th scope="col">Category</th>
+                <th scope="col">Description</th>
             </tr>
         </thead>
         <tbody>
 
-            {% for food in menu %}
-                    {% if 'APPETIZERS' in food.5  %}
+    <h1>Appetizers</h1>
+        {% for dish in menu %}
+                    {% if 'Appetizers' in dish.category  %}
                     <tr>
-                        <td>{{ food.1 }}</td>
-                        <td>${{ food.2 }}</td>
-                        <td>{{ food.3 }}</td>
-                        <td>{{ food.5 }}</td>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{ "{:,.2f}".format(dish.price / 100.0) }}</td>
+                        <td>{{ dish.description }}</td>
                         <td>
-                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
-                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                            <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
                         </td>
                     </tr>
-                    {% elif 'SOUPS' in food.5  %}
+                    {% endif %}
+                {% endfor %}
+</table>
+ </div>
+ <div class="container">
+    <table class="table table-hover">
+        <h1>Soups</h1>
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Soups' in dish.category  %}
                     <tr>
-                        <td>{{ food.1 }}</td>
-                        <td>${{ food.2 }}</td>
-                        <td>{{ food.3 }}</td>
-                        <td>{{ food.5 }}</td>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+
                         <td>
-                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
-                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                            <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
                         </td>
                     </tr>
-                    {% elif 'NOODLE SOUPS' in food.5  %}
+                    {% endif %}
+                {% endfor %}
+    </table>
+ </div>
+ <div class="container">
+    <table class="table table-hover">
+        <h1>Noodle Soups</h1>
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Noodle Soups' in dish.category  %}
                     <tr>
-                        <td>{{ food.1 }}</td>
-                        <td>${{ food.2 }}</td>
-                        <td>{{ food.3 }}</td>
-                        <td>{{ food.5 }}</td>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+
                         <td>
-                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
-                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                            <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
                         </td>
                     </tr>
-                    {% elif 'FRIED RICE' in food.5  %}
+                    {% endif %}
+                {% endfor %}
+    </table>
+ </div>
+  <div class="container">
+    <table class="table table-hover">
+        <h1>Fried Rice</h1>
+        <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+                <th scope="col">Description</th>
+            </tr>
+        </thead>
+        <tbody>
+
+                {% for dish in menu %}
+                    {% if 'Fried Rice' in dish.category  %}
                     <tr>
-                        <td>{{ food.1 }}</td>
-                        <td>${{ food.2 }}</td>
-                        <td>{{ food.3 }}</td>
-                        <td>{{ food.5 }}</td>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+
                         <td>
-                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
-                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                            <button type="submit" class="btn btn-outline btn-success">Add to Cart</button>
+                            <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
                         </td>
                     </tr>
-                    {% elif 'CHOW MEIN' in food.5  %}
+                    {% endif %}
+                {% endfor %}
+     </table>
+  </div>
+ <div class="container">
+     <table class="table table-hover">
+         <h1>Chow Mein</h1>
+         <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Chow Mein' in dish.category  %}
                     <tr>
-                        <td>{{ food.1 }}</td>
-                        <td>${{ food.2 }}</td>
-                        <td>{{ food.3 }}</td>
-                        <td>{{ food.5 }}</td>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
                         <td>
-                            <input type="hidden" name="id" value="{{ food.menu_id }}"/>
-                            <input type="text" class="product-quantity" name="quantity" value="1" size="2" />
-                            <input type="submit" value="Add to Cart" class="btn btn-outline btn-success">
+                           <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
                         </td>
                     </tr>
-                {% endif %}
-            {% endfor %}
+                    {% endif %}
+                {% endfor %}
         </tbody>
     </table>
 {% endblock %}

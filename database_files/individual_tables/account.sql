@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Nov 09, 2021 at 02:32 AM
+-- Generation Time: Dec 04, 2021 at 02:54 AM
 -- Server version: 5.6.37
 -- PHP Version: 5.6.31
 
@@ -33,15 +33,17 @@ CREATE TABLE IF NOT EXISTS `account` (
   `phone` varchar(14) NOT NULL,
   `address` varchar(250) NOT NULL,
   `email` varchar(50) NOT NULL,
-  `password` varchar(250) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
+  `password` varchar(250) NOT NULL,
+  `admin` tinyint(1) NOT NULL DEFAULT '0'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `account`
 --
 
-INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`, `password`) VALUES
-(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com', 'testpass1234');
+INSERT INTO `account` (`account_id`, `first_name`, `last_name`, `phone`, `address`, `email`, `password`, `admin`) VALUES
+(1, 'Testfirst', 'Testlast', '1112223344', 'test# testrd teststate 00000', 'testaccount@test.com', 'testpass1234', 0),
+(2, 'admin', 'admin', '0123456789', '123 admin address', 'admin@aol.com', 'admin', 1);
 
 --
 -- Indexes for dumped tables
@@ -61,7 +63,7 @@ ALTER TABLE `account`
 -- AUTO_INCREMENT for table `account`
 --
 ALTER TABLE `account`
-  MODIFY `account_id` int(12) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+  MODIFY `account_id` int(12) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;

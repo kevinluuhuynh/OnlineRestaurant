@@ -47,7 +47,7 @@ INSERT INTO `menu` (`menu_id`, `dish_name`, `price`, `size`, `description`, `cat
 (6, 'Vegetable Fried Rice', 5.95, 'Pt.', NULL, 'FRIED RICE'),
 (7, 'Vegetable Fried Rice', 8.95, 'Qt.', NULL, 'FRIED RICE'),
 (8, 'Vegetable Chow Mein', 5.95, 'Pt.', 'Served w/ white rice & fried noodle', 'CHOW MEIN'),
-(9, 'Vegetable Chow Mein', 8.95, 'Qt.', 'Served w/ white rice & fried noodle', 'CHOW MEIN');
+(9, 'Vegetable Chow Mein', 8.95, 'Qt.', 'Served w/ white rice & fried noodle', 'CHOW MEIN'),
 
 --
 -- Indexes for dumped tables
