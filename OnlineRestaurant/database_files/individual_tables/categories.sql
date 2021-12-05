@@ -55,6 +55,7 @@ INSERT INTO `categories` (`category`) VALUES
 ('SWEET & SOUR'),
 ('VEGETABLES & BEAN CURD');
 
+
 --
 -- Indexes for dumped tables
 --

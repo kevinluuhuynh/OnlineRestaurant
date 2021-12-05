@@ -25,7 +25,7 @@
 			<div class="panel-body">
 				{% for dish in menu_items %}
 				<div class="row">
-					<div class="col-lg-8 text">
+					<div class="col-lg-6 text">
 						<h5 class="bold">{{ dish['dish_name'] }}</h5>
 						<p>{{ "${:,.2f}".format(dish['price'] / 100) }}</p>
 						<br />
@@ -36,13 +36,13 @@
 							</button></a>
 						</p>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h5>Quantity</h5>
 						<p>
 							{{ dish['quantity'] }}
 						</p>
 					</div>
-					<div class="col-md-2">
+					<div class="col-md-3">
 						<h5>Total</h5>
 						<p>
 							<strong>{{ "${:,.2f}".format(dish['total'] / 100) }}</strong>
