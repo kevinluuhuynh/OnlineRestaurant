@@ -82,6 +82,20 @@
     text-align: center;
     margin: 20px 0;
 }
+
+.larger{
+      transition: all 500ms;
+  }
+
+.larger:hover{
+        transform: scale(1.3);
+}
+.largerImage{
+      transition: all 500ms;
+  }
+.largerImage:hover{
+        transform: scale(1.6);
+}
 .gap{
      margin-right:10px;
 }

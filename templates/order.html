@@ -222,4 +222,180 @@
                 {% endfor %}
         </tbody>
     </table>
+
+  <div class="container">
+     <table class="table table-hover">
+         <h1>Lo Mein</h1>
+         <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Lo Mein' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                        <td>
+                           <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+
+ <div class="container">
+     <table class="table table-hover">
+         <h1>Vegetable & Bean Curd</h1>
+         <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Vegetable & Bean Curd' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                        <td>
+                           <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+
+
+ <div class="container">
+     <table class="table table-hover">
+         <h1>Chicken</h1>
+         <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Chicken' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                        <td>
+                           <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+
+
+ <div class="container">
+     <table class="table table-hover">
+         <h1>Beef</h1>
+         <table class="table table-hover">
+        <thead>
+            <tr>
+                <th scope="col">Name</th>
+                <th scope="col">Price</th>
+                <th scope="col">Size</th>
+
+            </tr>
+        </thead>
+        <tbody>
+                {% for dish in menu %}
+                    {% if 'Beef' in dish.category  %}
+                    <tr>
+                        <td>{{ dish.dish_name }}</td>
+                        <td>${{dish.price / 100 }}</td>
+                        <td>{{ dish.size }}</td>
+                        <td>{{ dish.description }}</td>
+                        <td>{{ dish.category }}</td>
+                        <td>
+                           <form class="form" action="{{ url_for('add_to_cart') }}" method="POST">
+							    <div>
+								    {{ form.csrf_token }}
+
+								    {{ form.quantity(class='form-control', type='number', min=1, max=100, step=1, value=1) }}
+
+								    {{ form.menu_id(value=dish.menu_id) }}
+							    </div>
+                                    <div>
+				                        <button type="submit" class="btn btn-info">
+					                    <i class="glyphicon glyphicon-shopping-cart"></i> Add To Cart
+				                        </button>
+			                        </div>
+                            </form>
+                        </td>
+                    </tr>
+                    {% endif %}
+                {% endfor %}
+        </tbody>
+    </table>
+
+
 {% endblock %}

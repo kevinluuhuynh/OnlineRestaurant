@@ -14,7 +14,7 @@
    </head>
    <body>
    <div id="page-container">
-      <nav class="navbar navbar-fixed-top navbar-expand-md navbar-dark bg-dark">
+      <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
          <a class="navbar-brand" href="{{ url_for('home_page') }}">Ky Lin Restaurant</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav">
         <span class="navbar-toggler-icon"></span>
@@ -47,7 +47,7 @@
                     <a class="nav-link" href="{{ url_for('logout_page') }}">Logout</a>
                 </li>
             </ul>
-          {% elif 'loggedin' in session and admin %}
+          {% elif admin %}
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item">
                     <a class="nav-link" href="{{ url_for('admin') }}"><i class="glyphicon glyphicon-dashboard"></i> Admin Dashboard</a>
@@ -85,7 +85,7 @@
 
       <footer id="footer">
         <div class="row pad">
-            <div class="col-lg-12 text-center">
+            <div class="col-lg-12 text-center footer mt-5">
                 Copyright &copy; 2021 <strong>Ky Lin Restaurant</strong>
             </div>
         </div>
@@ -103,6 +103,9 @@
       body {
       background-color: #212121;
       color: white
+         }
+      footer{
+      color:black
       }
    </style>
 </html>
